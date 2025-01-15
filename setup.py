@@ -15,7 +15,9 @@ setup(
     long_description_content_type="text/markdown",
     url="https://github.com/takeiteasy/pyrope",
     include_dirs="/Users/george/git/pyrope",
-    ext_modules=[Extension("pyrope", sources=["pyrope.c", "rope.c"])],
+    ext_modules=[Extension("pyrope",
+                           sources=["pyrope.c", "rope.c"],
+                           extra_link_args=["-DROPE_WCHAR 1"])],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",
