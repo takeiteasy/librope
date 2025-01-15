@@ -1,3 +1,29 @@
+Metadata-Version: 2.2
+Name: pyrope
+Version: 0.0.1
+Summary: Python bindings for librope
+Home-page: https://github.com/takeiteasy/pyrope
+Author: George Watson
+Author-email: gigolo@hotmail.co.uk
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: summary
+
+# pyrope
+
+Python bindings for [librobe](https://github.com/josephg/librope)
+
+## LICENSE
+```
 Copyright 2011 Joseph Gentle.
 Copyright 2015 George Watson (bindings) 
 
@@ -18,3 +44,4 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
+```

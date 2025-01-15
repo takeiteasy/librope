@@ -15,3 +15,11 @@ Build
 afl/afl
 afl/afl_findings
 
+env/
+build/
+.DS_Store
+**/.DS_Store
+*.egg_info
+dist/
+__pycache__/
+**/__pycache__/
