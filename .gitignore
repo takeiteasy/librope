@@ -19,7 +19,7 @@ env/
 build/
 .DS_Store
 **/.DS_Store
-*.egg_info/
+pyrope.egg-info/
 dist/
 __pycache__/
 **/__pycache__/
