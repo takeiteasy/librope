@@ -1,6 +1,6 @@
 # pyrope
 
-Python bindings for [librobe](https://github.com/josephg/librope)
+Python bindings for [librobe](https://github.com/josephg/librope). Available on [PyPi](https://pypi.org/project/py-librope/).
 
 ```python
 from pyrope import PyRope as Rope
