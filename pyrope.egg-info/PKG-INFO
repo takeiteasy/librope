@@ -1,26 +1,26 @@
+Metadata-Version: 2.2
+Name: pyrope
+Version: 0.0.1
+Summary: Python bindings for librope
+Home-page: https://github.com/takeiteasy/pyrope
+Author: George Watson
+Author-email: gigolo@hotmail.co.uk
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Dynamic: author
+Dynamic: author-email
+Dynamic: classifier
+Dynamic: description
+Dynamic: description-content-type
+Dynamic: home-page
+Dynamic: summary
+
 # pyrope
 
 Python bindings for [librobe](https://github.com/josephg/librope)
-
-```python
-from pyrope import PyRope as Rope
-
-rope = Rope("test")
-string = str(rope)
-print(string)
-# > test
-length = len(rope)
-print(length)
-# > 4
-print(rope.insert(0, "test"))
-# > True
-print(rope)
-# > testtest
-rope.delete(0, 4)
-print(rope)
-# > test
-del rope
-```
 
 ## LICENSE
 ```

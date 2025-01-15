@@ -4,29 +4,71 @@
 
 typedef struct {
     PyObject_HEAD
-    rope *ptr;
+    rope *rope;
 } PyRope;
 
 static PyObject* PyRope_New(PyTypeObject *type, PyObject *args, PyObject *kwds) {
     PyRope* self = (PyRope*)type->tp_alloc(type, 0);
-    if (!self || !(self->ptr = rope_new()))
+    if (!self || !(self->rope = rope_new()))
         return NULL;
     const char *str = NULL;
     if (!PyArg_ParseTuple(args, "s", &str)) {
         Py_DECREF(self);
         return NULL;
     }
+    rope_insert(self->rope, 0, str);
     return (PyObject*)self;
 }
 
 static void PyRope_Dealloc(PyRope* self) {
-    if (self->ptr)
-        rope_free(self->ptr);
+    if (self->rope)
+        rope_free(self->rope);
     Py_TYPE(self)->tp_free((PyObject*)self);
 }
 
+static PyObject* PyRope_String(PyRope *self) {
+    uint8_t *utf8 = rope_create_cstr(self->rope);
+    if (!utf8)
+        return NULL;
+    PyObject *result = PyUnicode_FromStringAndSize(utf8, rope_char_count(self->rope));
+    free(utf8);
+    return result;
+}
+
+static Py_ssize_t PyRope_length(PyRope *self) {
+    return (Py_ssize_t)rope_char_count(self->rope);
+}
+
+static PyObject* PyRope_insert(PyRope *self, PyObject *args) {
+    int position;
+    const char *string;
+    if (!PyArg_ParseTuple(args, "is", &position, &string))
+        return NULL;
+    ROPE_RESULT result = rope_insert(self->rope, position, string);
+    if (result == ROPE_OK) {
+        Py_RETURN_TRUE;
+    } else {
+        Py_RETURN_FALSE;
+    }
+}
+
+static PyObject* PyRope_delete(PyRope *self, PyObject *args) {
+    int start;
+    int count;
+    if (!PyArg_ParseTuple(args, "ii", &start, &count))
+        return NULL;
+    rope_del(self->rope, start, count);
+    Py_RETURN_NONE;
+}
+
 static PyMethodDef PyRope_methods[] = {
+    {"insert", (PyCFunction)PyRope_insert, METH_VARARGS, NULL},
+    {"delete", (PyCFunction)PyRope_delete, METH_VARARGS, NULL},
     {NULL, NULL, 0, NULL}
+};
+
+static PyMappingMethods PyRope_mapping = {
+    (lenfunc)PyRope_length, NULL, NULL
 };
 
 static PyTypeObject PyRopeType = {
@@ -35,17 +77,17 @@ static PyTypeObject PyRopeType = {
     sizeof(PyRope),                             /* tp_basicsize */
     0,                                          /* tp_itemsize */
     (destructor)PyRope_Dealloc,                 /* tp_dealloc */
-    0,                                          /* tp_print */
+    0,                                          /* tp_vectorcall_offset */
     0,                                          /* tp_getattr */
     0,                                          /* tp_setattr */
-    0,                                          /* tp_reserved */
+    0,                                          /* tp_as_async */
     0,                                          /* tp_repr */
     0,                                          /* tp_as_number */
     0,                                          /* tp_as_sequence */
-    0,                                          /* tp_as_mapping */
+    &PyRope_mapping,                            /* tp_as_mapping */
     0,                                          /* tp_hash */
     0,                                          /* tp_call */
-    0,                                          /* tp_str */
+    (reprfunc)PyRope_String,                    /* tp_str */
     0,                                          /* tp_getattro */
     0,                                          /* tp_setattro */
     0,                                          /* tp_as_buffer */
@@ -68,9 +110,21 @@ static PyTypeObject PyRopeType = {
     0,                                          /* tp_init */
     0,                                          /* tp_alloc */
     (newfunc)PyRope_New,                        /* tp_new */
+    0,                                          /* tp_free */
+    0,                                          /* tp_is_gc */
+    0,                                          /* tp_bases */
+    0,                                          /* tp_mro */
+    0,                                          /* tp_cache */
+    0,                                          /* tp_subclasses */
+    0,                                          /* tp_weaklist */
+    0,                                          /* tp_del */
+    0,                                          /* tp_version_tag */
+    0,                                          /* tp_finalize */
+    0,                                          /* tp_vectorcall */
+    0,                                          /* tp_watched */
 };
 
-static PyMethodDef pyrope_methods[] = {
+static PyMethodDef empty_methods[] = {
     {NULL, NULL, 0, NULL}
 };
 
@@ -79,7 +133,7 @@ static struct PyModuleDef pyrope_module = {
     "pyrope",
     "Python bindings for librope",
     -1,
-    pyrope_methods
+    empty_methods
 };
 
 PyMODINIT_FUNC PyInit_pyrope(void) {
