@@ -1,0 +1,9 @@
+LICENSE
+README.md
+pyrope.c
+rope.c
+setup.py
+pyrope.egg-info/PKG-INFO
+pyrope.egg-info/SOURCES.txt
+pyrope.egg-info/dependency_links.txt
+pyrope.egg-info/top_level.txt
