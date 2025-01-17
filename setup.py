@@ -29,7 +29,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="pyrope",
-    version="0.0.1",
+    version="0.0.2",
     author="George Watson",
     author_email="gigolo@hotmail.co.uk",
     description="Python bindings for librope",
@@ -38,8 +38,7 @@ setup(
     url="https://github.com/takeiteasy/pyrope",
     include_dirs="/Users/george/git/pyrope",
     ext_modules=[Extension("pyrope",
-                           sources=["pyrope.c", "rope.c"],
-                           extra_link_args=["-DROPE_WCHAR 1"])],
+                           sources=["pyrope.c", "rope.c"])],
     classifiers=[
         "Programming Language :: Python :: 3",
         "License :: OSI Approved :: MIT License",

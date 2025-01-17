@@ -21,7 +21,6 @@
  THE SOFTWARE. */
 
 #include <Python.h>
-#define ROPE_WCHAR 1
 #include "rope.h"
 
 typedef struct {
